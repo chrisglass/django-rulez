@@ -13,10 +13,10 @@ from django.conf import settings
 
 def runtests():
     failures = run_tests([
-        'django_rules.BackendTest',
-        'django_rules.RulePermissionTest',
-        'django_rules.UtilsTest',
-        'django_rules.DecoratorsTest'
+        'rulez.BackendTest',
+#        'django_rules.RulePermissionTest',
+        'rulez.UtilsTest',
+#        'django_rules.DecoratorsTest'
         ], verbosity=1, interactive=True)
     sys.exit(failures)
 

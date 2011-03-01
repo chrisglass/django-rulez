@@ -7,8 +7,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.contenttypes',
     'django.contrib.admin',
-    'django_rules',
-    'django_rules.tests',
+    'rulez',
+    'rulez.tests',
     )
 
 DATABASES = {
@@ -19,7 +19,7 @@ DATABASES = {
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'django_rules.backends.ObjectPermissionBackend',
+    'rulez.backends.ObjectPermissionBackend',
 )
 
 ANONYMOUS_USER_ID = '1'
