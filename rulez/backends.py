@@ -9,7 +9,6 @@ from exceptions import NonexistentFieldName
 
 from rulez import registry
 
-
 class ObjectPermissionBackend(object):
     supports_object_permissions = True
     supports_anonymous_user = True

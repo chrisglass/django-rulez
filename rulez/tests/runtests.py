@@ -9,14 +9,12 @@ parent = os.path.dirname(os.path.dirname(os.path.dirname(
 sys.path.insert(0, parent)
 
 from django.test.simple import run_tests
-from django.conf import settings
 
 def runtests():
     failures = run_tests([
         'rulez.BackendTest',
 #        'django_rules.RulePermissionTest',
         'rulez.UtilsTest',
-#        'django_rules.DecoratorsTest'
         ], verbosity=1, interactive=True)
     sys.exit(failures)
 
