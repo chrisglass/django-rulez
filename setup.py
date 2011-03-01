@@ -12,7 +12,7 @@ setup(
     name='django-rulez',
     version=version,
     description="Flexible per-object authorization backend for Django",
-    long_description=read('README.textile'),
+    long_description=read('README.rst'),
     classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",

@@ -16,4 +16,4 @@ lib/
 .settings/
 rulez/tests/.coverage
 rulez/tests/htmlcov/
-
+django_rulez.egg-info/

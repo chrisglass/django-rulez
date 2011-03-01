@@ -1,2 +1,2 @@
-include README.textile
+include README.rst
 include LICENSE.txt
