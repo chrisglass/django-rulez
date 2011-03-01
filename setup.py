@@ -9,7 +9,7 @@ def read(fname):
 version = '0.1'
 
 setup(
-    name='django-rules',
+    name='django-rulez',
     version=version,
     description="Flexible per-object authorization backend for Django",
     long_description=read('README.textile'),
@@ -22,10 +22,10 @@ setup(
         "Framework :: Django",
         "Environment :: Web Environment",
     ],
-    keywords=['authorization', 'backends', 'django', 'rules', 'permissions'],
-    author='Miguel Araujo',
-    author_email='miguel.araujo.perez@gmail.com',
-    url='http://github.com/maraujop/django-rules',
+    keywords=['authorization', 'backends', 'django', 'rules', 'permissions', 'rulez'],
+    author='Christopher Glass',
+    author_email='tribaal@gmail.com',
+    url='http://github.com/cglass/django-rulez',
     license='BSD',
     packages=find_packages(),
     zip_safe=False,
