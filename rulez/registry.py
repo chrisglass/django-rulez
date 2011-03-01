@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-# {class: 
-#    {'codename': 
-#        [field_name,view_param_pk, description] 
-#    } 
-# } 
 from rulez.exceptions import NonexistentFieldName
+
 class Rule(object):
     def __init__(self, codename, model, field_name='', view_param_pk='', 
                  description=''):
@@ -14,6 +10,11 @@ class Rule(object):
         self.model = model
         self.view_param_pk = view_param_pk
 
+# {class: 
+#    {'codename': 
+#        [field_name,view_param_pk, description] 
+#    } 
+# } 
 registry = {}
     
 def register(codename, model, field_name='', view_param_pk='', description=''):
