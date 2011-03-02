@@ -24,7 +24,9 @@ To install django-rulez from source::
 From Pypi
 ----------
 
-Coming soon!
+Simply install django-rulez like you would install any other pypi package::
+
+    pip install django-rulez
 
 
 Configuration
@@ -38,12 +40,23 @@ Configuration
 	    'django_rules.backends.ObjectPermissionBackend',
 	}
 
-Rules
-======
-
-
-
-Examples
+Example
 =========
 
+The following example should get you started::
+
+    # models.py
+    from rulez import registry
+    
+    class myModel(models.Model)
+        
+        def can_edit(self, user_obj):
+            '''
+            Not a very useful rule, but it's an example
+            '''
+            if user_obj.username == 'chris':
+                return True
+            return False
+            
+    registry.register('can_edit', myModel)
 
