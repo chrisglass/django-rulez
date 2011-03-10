@@ -28,9 +28,6 @@ class ObjectPermissionBackend(object):
         if obj is None:
             return False
 
-        if not user_obj.is_authenticated():
-            user_obj = User.objects.get(pk=settings.ANONYMOUS_USER_ID)
-
         # We get the rule data from our registry
         rule = registry.get(perm, obj.__class__)
         if rule == None:
