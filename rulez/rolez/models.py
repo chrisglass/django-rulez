@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from rulez.roles.cache_helper import get_roles
+from rulez.rolez.cache_helper import get_roles
 
 class ModelRoleMixin(object):
     """

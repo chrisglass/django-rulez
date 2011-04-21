@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 from django.test.testcases import TestCase
-from rulez.roles.cache_helper import get_counter, increment_counter, get_roles
-from rulez.roles.models import ModelRoleMixin
-from rulez.roles.roles import AbstractRole
+from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles
+from rulez.rolez.models import ModelRoleMixin
+from rulez.rolez.roles import AbstractRole
 
 class Mock():
     id = 999
