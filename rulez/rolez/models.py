@@ -7,12 +7,25 @@ class ModelRoleMixin(object):
     This adds roles-handling methods to the model it's mixed with
     """
     
+    def get_roles(self, user):
+        """
+        Gets all roles this user has for this object and caches it on the
+        instance.
+        Without the instance cache every call to has_role() would hit the
+        cache backend.
+        """
+        rolez = getattr(self, '_rolez', {})
+        if not user.pk in rolez.keys():
+            rolez[user.pk] = get_roles(user, self)
+        self._rolez = rolez
+        return self._rolez[user.pk]
+    
     def has_role(self, user, role):
         """
         Checks wether the passed user is a member of the passed role for the
         passed instance
         """
-        roles = get_roles(user, self)
+        roles = self.get_roles(user)
         if role in roles:
             return True
         return False
