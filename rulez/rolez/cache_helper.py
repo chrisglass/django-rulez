@@ -40,7 +40,7 @@ def roles_key(user, obj):
     obj_id = obj.pk
     obj_type = str(obj.__class__.__name__).lower()
     obj_counter = get_counter(obj)
-    user_id = user.id
+    user_id = user.pk
     user_counter = get_counter(user)
     return "%s-%s-%s-%s-%s" % (user_id, user_counter, obj_type, obj_id, 
                                obj_counter)

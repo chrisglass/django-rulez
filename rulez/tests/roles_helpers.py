@@ -2,13 +2,14 @@
 from django.test.testcases import TestCase
 from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles
 from rulez.rolez.models import ModelRoleMixin
-from rulez.rolez.roles import AbstractRole
+from rulez.rolez.base import AbstractRole
 
 class Mock():
-    id = 999
+    pk = 999
 
 class MockUser():
-    id = 666
+    def __init__(self):
+        self.pk=666
 
 # Testing the model inheritence
 class Tester(AbstractRole):
@@ -17,7 +18,7 @@ class Tester(AbstractRole):
         return getattr(user, 'member', False)
     
 class TestModel(ModelRoleMixin):
-    id = 1 # Just to emulate a Django model
+    pk = 1 # Just to emulate a Django model
     roles = [Tester]
 
 # The actual test case
