@@ -15,6 +15,7 @@ def runtests():
         'rulez.BackendTest',
 #        'django_rules.RulePermissionTest',
         'rulez.UtilsTest',
+        'rulez.RolesCacheHelperTestCase',
         ], verbosity=1, interactive=True)
     sys.exit(failures)
 

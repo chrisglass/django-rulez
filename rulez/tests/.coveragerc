@@ -1,0 +1,11 @@
+[run]
+branch = True
+source =
+    rulez
+omit =
+    ../../*migrations*
+    ../../*tests*
+    /usr/share/*
+[report]
+precision = 2
+
