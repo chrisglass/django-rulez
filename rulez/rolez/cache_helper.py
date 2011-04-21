@@ -19,9 +19,9 @@ HOUR = 60*60
 # Counter handling
 #===============================================================================
 def counter_key(obj):
-    id = obj.id
+    pk = obj.pk
     type = str(obj.__class__.__name__).lower()
-    return "%s-%s" % (type, id)
+    return "%s-%s" % (type, pk)
     
 def increment_counter(obj):
     cache.set(counter_key(obj), datetime.datetime.now(), 1*HOUR)
@@ -37,7 +37,7 @@ def get_counter(obj):
     return counter
 
 def roles_key(user, obj):
-    obj_id = obj.id
+    obj_id = obj.pk
     obj_type = str(obj.__class__.__name__).lower()
     obj_counter = get_counter(obj)
     user_id = user.id

@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
-from rulez.rolez.cache_helper import get_roles
+from rulez.rolez.cache_helper import get_roles, increment_counter
+import signals
 
 class ModelRoleMixin(object):
     """
@@ -23,3 +24,13 @@ class ModelRoleMixin(object):
         miss
         """
         return self.roles
+    
+    def rulez_invalidate(self):
+        """
+        This is the default, simple case where the model is related to user, and
+        so invalidating it will force connected users to recalculate their keys
+        
+        In some cases you will want to invalidate the related objects here by 
+        incrementing counters for other models in your application
+        """
+        increment_counter(self)
