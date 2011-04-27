@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from rulez.rolez.cache_helper import get_roles, increment_counter
+from rulez.rolez.cache_helper import get_roles, get_user_pk, increment_counter
 import signals
 
 class ModelRoleMixin(object):
@@ -15,10 +15,11 @@ class ModelRoleMixin(object):
         cache backend.
         """
         rolez = getattr(self, '_rolez', {})
-        if not user.pk in rolez.keys():
-            rolez[user.pk] = get_roles(user, self)
+        pk = get_user_pk(user)
+        if not pk in rolez.keys():
+            rolez[pk] = get_roles(user, self)
         self._rolez = rolez
-        return self._rolez[user.pk]
+        return self._rolez[pk]
     
     def has_role(self, user, role):
         """
