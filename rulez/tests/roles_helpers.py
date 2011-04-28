@@ -15,8 +15,8 @@ class MockUser():
 
 # Testing the model inheritence
 class Tester(AbstractRole):
-    
-    def is_member(self,user, obj):
+    @classmethod
+    def is_member(cls, user, obj):
         return getattr(user, 'member', False)
     
 class TestModel(ModelRoleMixin):
