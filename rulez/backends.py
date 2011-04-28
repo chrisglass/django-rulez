@@ -11,8 +11,8 @@ class ObjectPermissionBackend(object):
     supports_anonymous_user = True
     supports_inactive_user = True
 
-#    def authenticate(self, username, password):
-#        return None
+    def authenticate(self, username, password):
+        return None
 
     def has_perm(self, user_obj, perm, obj=None):
         """
