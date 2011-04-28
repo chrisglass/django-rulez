@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 import inspect
 
-from django.conf import settings
-from django.contrib.auth.models import User
-
 from exceptions import NotBooleanPermission
 from exceptions import NonexistentFieldName
 
@@ -14,8 +11,8 @@ class ObjectPermissionBackend(object):
     supports_anonymous_user = True
     supports_inactive_user = True
 
-    def authenticate(self, username, password):
-        return None
+#    def authenticate(self, username, password):
+#        return None
 
     def has_perm(self, user_obj, perm, obj=None):
         """
