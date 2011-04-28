@@ -24,8 +24,8 @@ def counter_key(obj):
         pk = get_user_pk(obj)
     else:
         pk = obj.pk
-    type = str(obj.__class__.__name__).lower()
-    return "%s-%s" % (type, pk)
+    obj_type = str(obj.__class__.__name__).lower()
+    return "%s-%s" % (obj_type, pk)
     
 def increment_counter(obj):
     cache.set(counter_key(obj), datetime.datetime.now(), 1*HOUR)
