@@ -11,7 +11,7 @@ version = '0.2.0'
 setup(
     name='django-rulez',
     version=version,
-    description="Flexible per-object authorization backend for Django",
+    description="A lean and mean object-level rules system for the Django framework",
     long_description=read('README.rst'),
     classifiers=[
         "Programming Language :: Python",
