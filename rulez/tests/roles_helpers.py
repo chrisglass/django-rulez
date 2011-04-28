@@ -10,6 +10,8 @@ class Mock():
 class MockUser():
     def __init__(self):
         self.pk=666
+    def is_anonymous(self):
+        return False
 
 # Testing the model inheritence
 class Tester(AbstractRole):

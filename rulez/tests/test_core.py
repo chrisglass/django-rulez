@@ -10,11 +10,7 @@ from rulez import registry
 
 class BackendTest(TestCase):
     def setUp(self):
-        try:
-            self.anonymous = User.objects.get_or_create(id=settings.ANONYMOUS_USER_ID, username='anonymous', is_active=True)[0]
-        except Exception:
-            self.fail("You need to define an ANONYMOUS_USER_ID in your settings file")
-        
+        self.anonymous = AnonymousUser()
         self.user = User.objects.get_or_create(username='javier', is_active=True)[0]
         self.otherUser = User.objects.get_or_create(username='juan', is_active=True)[0]
         self.superuser = User.objects.get_or_create(username='miguel', is_active=True, is_superuser=True)[0]

@@ -22,4 +22,3 @@ AUTHENTICATION_BACKENDS = (
     'rulez.backends.ObjectPermissionBackend',
 )
 
-ANONYMOUS_USER_ID = '1'
