@@ -119,7 +119,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'rulez',
+    'rulez', # The actual rulez package
+    'project', # import the test app too
 )
 
 # A sample logging configuration. The only tangible logging
