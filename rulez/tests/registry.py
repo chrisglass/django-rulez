@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.test.testcases import TestCase
 from rulez import registry
+from rulez.exceptions import NonexistentFieldName
 
 class MockModel():
     pk = 999
@@ -21,4 +22,9 @@ class RegistryTestCase(TestCase):
         res = registry.get('mock_permission', MockModel)
         self.assertNotEqual(res, None)
         self.assertNotEqual(res, {})
+         
+    def test_registration_raises_non_existant_field_names(self):
+        self.assertRaises(NonexistentFieldName, registry.register, 
+            'mock_permission', MockModel, field_name='inexistant'
+        )
          
