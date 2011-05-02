@@ -5,6 +5,7 @@ from rulez.rolez.base import AbstractRole
 from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles, \
     get_user_pk, roles_key
 from rulez.rolez.models import ModelRoleMixin
+from django.core import cache
 
 class Mock():
     pk = 999
@@ -28,6 +29,9 @@ class TestModel(ModelRoleMixin):
 
 # The actual test case
 class RolesCacheHelperTestCase(TestCase):
+    
+    def setUp(self):
+        cache.cache.clear()
     
     def test_incrementing_counter_works(self):
         obj = Mock()
@@ -78,5 +82,7 @@ class RolesCacheHelperTestCase(TestCase):
     def test_get_counter_does_not_return_spaces(self):
         obj = Mock()
         user = MockUser()
+        roles_key(user, obj) # The first time, the counter == 0
+        increment_counter(obj) # Now there should be a timestamp
         res = roles_key(user, obj)
         self.assertTrue(' ' not in res)
