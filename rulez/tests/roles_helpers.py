@@ -1,8 +1,10 @@
 #-*- coding: utf-8 -*-
+from django.contrib.auth.models import AnonymousUser
 from django.test.testcases import TestCase
-from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles
-from rulez.rolez.models import ModelRoleMixin
 from rulez.rolez.base import AbstractRole
+from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles, \
+    get_user_pk
+from rulez.rolez.models import ModelRoleMixin
 
 class Mock():
     pk = 999
@@ -12,6 +14,7 @@ class MockUser():
         self.pk=666
     def is_anonymous(self):
         return False
+    
 
 # Testing the model inheritence
 class Tester(AbstractRole):
@@ -60,3 +63,15 @@ class RolesCacheHelperTestCase(TestCase):
         user = MockUser()
         res = model.has_role(user, Tester)
         self.assertEqual(res, False)
+        
+    def test_get_anonymous_user_works(self):
+        anon = AnonymousUser()
+        res = get_user_pk(anon)
+        self.assertEqual(res, 'anonymous')
+        
+    def test_get_roles_works_for_anonymous(self):
+        model = TestModel()
+        user = AnonymousUser()
+        res = model.has_role(user, Tester)
+        self.assertEqual(res, False)
+        
