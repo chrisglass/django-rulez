@@ -3,7 +3,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.test.testcases import TestCase
 from rulez.rolez.base import AbstractRole
 from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles, \
-    get_user_pk
+    get_user_pk, roles_key
 from rulez.rolez.models import ModelRoleMixin
 
 class Mock():
@@ -74,4 +74,9 @@ class RolesCacheHelperTestCase(TestCase):
         user = AnonymousUser()
         res = model.has_role(user, Tester)
         self.assertEqual(res, False)
-        
+    
+    def test_get_counter_does_not_return_spaces(self):
+        obj = Mock()
+        user = MockUser()
+        res = roles_key(user, obj)
+        self.assertTrue(' ' not in res)
