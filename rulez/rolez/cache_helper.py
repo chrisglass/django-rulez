@@ -2,7 +2,7 @@
 
 from django.core.cache import cache
 from django.contrib.auth.models import User, AnonymousUser
-import datetime
+import time
 
 """
 Cache keys:
@@ -28,7 +28,7 @@ def counter_key(obj):
     return "%s-%s" % (obj_type, pk)
     
 def increment_counter(obj):
-    cache.set(counter_key(obj), datetime.datetime.now(), 1*HOUR)
+    cache.set(counter_key(obj), int(time.time()), 1*HOUR)
 
 def get_counter(obj):
     """
