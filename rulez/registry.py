@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from rulez.exceptions import NonexistentFieldName
+from collections import defaultdict
 
 class Rule(object):
     def __init__(self, codename, model, field_name='', view_param_pk='', 
@@ -10,12 +11,7 @@ class Rule(object):
         self.model = model
         self.view_param_pk = view_param_pk
 
-# {class: 
-#    {'codename': 
-#        [field_name,view_param_pk, description] 
-#    } 
-# } 
-registry = {}
+registry = defaultdict(dict)
     
 def register(codename, model, field_name='', view_param_pk='', description=''):
     """
@@ -29,9 +25,6 @@ def register(codename, model, field_name='', view_param_pk='', description=''):
         
     if not hasattr(model,field_name):
         raise NonexistentFieldName('Field %s does not exist on class %s' % (field_name,model.__name__))
-    
-    if not model in registry.keys():
-        registry[model] = {}
         
     registry[model].update({codename  : Rule(codename, model, field_name, 
                                              view_param_pk, description)})
