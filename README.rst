@@ -45,12 +45,12 @@ Simply install django-rulez like you would install any other pypi package::
 Configuration
 ==============
 
-* Add it to the list of `INSTALLED_APPS` in your `settings.py`
+* Add `rulez` to the list of `INSTALLED_APPS` in your `settings.py`
 * Add the django-rulez authorization backend to the list of `AUTHENTICATION_BACKENDS` in `settings.py`::
 
 	AUTHENTICATION_BACKENDS = {
 	    'django.contrib.auth.backends.ModelBackend', # Django's default auth backend
-	    'django_rules.backends.ObjectPermissionBackend',
+	    'rulez.backends.ObjectPermissionBackend',
 	}
 
 Example
