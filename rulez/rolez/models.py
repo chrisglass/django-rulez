@@ -1,6 +1,5 @@
 #-*- coding: utf-8 -*-
 from rulez.rolez.cache_helper import get_roles, get_user_pk, increment_counter
-import signals
 
 class ModelRoleMixin(object):
     """
