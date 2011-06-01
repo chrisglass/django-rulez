@@ -1,7 +1,8 @@
 #-*- coding: utf-8 -*-
 
-from django.core.cache import cache
 from django.contrib.auth.models import User, AnonymousUser
+from django.core.cache import cache
+from rulez.exceptions import RulesException
 import time
 
 """
@@ -28,13 +29,16 @@ def counter_key(obj):
     return "%s-%s" % (obj_type, pk)
     
 def increment_counter(obj):
-    cache.set(counter_key(obj), int(time.time()), 1*HOUR)
+    """
+    Invalidate the cache for the passed object.
+    """
+    if obj: # If the object is None, do nothing (it's pointless)
+        cache.set(counter_key(obj), int(time.time()), 1*HOUR)
 
 def get_counter(obj):
     """
     Returns the cached counter for the given object instance
     """
-    
     counter = cache.get(counter_key(obj))
     if not counter:
         counter = 0
@@ -75,6 +79,9 @@ def get_roles(user, obj):
     else:
         # we need to recompute roles for this model
         user_roles = []
+        if not hasattr(obj, 'relevant_roles'):
+            raise RulesException('Cannot build roles cache for %s instance. Did you forget to define a "relevant_roles()" method on %s?' % (obj.__class__, obj.__class__))
+        
         relevant = obj.relevant_roles()
         for role in relevant:
             if role.is_member(user, obj):
