@@ -1,11 +1,13 @@
 #-*- coding: utf-8 -*-
-from django.contrib.auth.models import AnonymousUser
+from __future__ import with_statement
+from django.contrib.auth.models import AnonymousUser, User
+from django.core import cache
 from django.test.testcases import TestCase
+from rulez.exceptions import RulesException
 from rulez.rolez.base import AbstractRole
 from rulez.rolez.cache_helper import get_counter, increment_counter, get_roles, \
     get_user_pk, roles_key
 from rulez.rolez.models import ModelRoleMixin
-from django.core import cache
 
 class Mock():
     pk = 999
@@ -41,6 +43,14 @@ class RolesCacheHelperTestCase(TestCase):
         second = get_counter(obj)
         self.assertNotEqual(second, first)
         
+    def test_incrementing_counter_works_for_none(self):
+        increment_counter(None)
+        
+    def test_get_roles_for_None_raises(self):
+        with self.assertRaises(AttributeError):
+            res = get_counter(None)
+            self.assertEqual(res, None)
+        
     def test_get_empty_roles_works(self):
         model = TestModel()
         user = MockUser()
@@ -54,6 +64,17 @@ class RolesCacheHelperTestCase(TestCase):
         setattr(user, 'member', True)
         res = get_roles(user, model)
         self.assertEqual(len(res), 1)
+        
+    def test_get_roles_cache_works(self):
+        # Now let's assert the cache works.
+        model = TestModel()
+        user = MockUser()
+        setattr(user, 'member', True)
+        res = get_roles(user, model)
+        self.assertEqual(len(res), 1)
+        res2 = get_roles(user, model)
+        self.assertEqual(len(res2), 1)
+        self.assertEqual(res, res2)
         
     def test_has_role_works(self):
         model = TestModel()
@@ -86,3 +107,28 @@ class RolesCacheHelperTestCase(TestCase):
         increment_counter(obj) # Now there should be a timestamp
         res = roles_key(user, obj)
         self.assertTrue(' ' not in res)
+        
+    def test_roles_for_users_on_users_raises_without_relevant_roles(self):
+        # If for some reasons you want to enforce rules on users...
+        django_user = User.objects.create(username="test", 
+                                        email="test@example.com",
+                                        first_name="Test",
+                                        last_name = "Tester")
+        user = MockUser() # That's faster
+        setattr(user, 'member', True)
+        with self.assertRaises(RulesException):
+            res = get_roles(user, django_user)
+            self.assertEqual(len(res), 1)
+            
+    def test_roles_for_users_on_users_works_with_relevant_roles(self):
+        # If for some reasons you want to enforce rules on users...
+        django_user = User.objects.create(username="test", 
+                                        email="test@example.com",
+                                        first_name="Test",
+                                        last_name = "Tester")
+        setattr(django_user, 'relevant_roles', lambda : [Tester])
+        user = MockUser() # That's faster
+        setattr(user, 'member', True)
+        res = get_roles(user, django_user)
+        self.assertEqual(len(res), 1)
+            
