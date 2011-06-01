@@ -1,3 +1,8 @@
+Version 2.3
+===========
+
+* Bugfix release
+
 Version 2.2
 ===========
 
