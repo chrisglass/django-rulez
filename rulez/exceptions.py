@@ -4,14 +4,14 @@ Exceptions used by django-rules. All internal and rules-specific errors
 should extend RulesError class
 """
 
-class RulesError(Exception):
+class RulesException(Exception):
     pass
 
-class NonexistentPermission(RulesError):
+class NonexistentPermission(RulesException):
     pass
 
-class NonexistentFieldName(RulesError):
+class NonexistentFieldName(RulesException):
     pass
 
-class NotBooleanPermission(RulesError):
+class NotBooleanPermission(RulesException):
     pass
