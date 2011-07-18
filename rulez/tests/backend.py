@@ -20,8 +20,9 @@ class MockModel():
         return True
 
 class MockUser():
-    def __init__(self):
+    def __init__(self, is_active=True):
         self.pk=666
+        self.is_active = is_active
     def is_anonymous(self):
         return False
 
@@ -29,6 +30,7 @@ class BackendTestCase(TestCase):
 
     def create_fixtures(self):
         self.user = MockUser()
+        self.inactive_user = MockUser(is_active=False)
         self.model = MockModel()
 
     def test_user_is_tested_for_rule(self):
@@ -75,3 +77,9 @@ class BackendTestCase(TestCase):
         
         self.assertRaises(NonexistentFieldName, back.has_perm, self.user, 'mock_permission', self.model)
         
+    def test_inactive_user_can_never_have_any_permissions(self):
+        self.create_fixtures()
+        registry.register('mock_permission', MockModel)
+        back = ObjectPermissionBackend()
+        res = back.has_perm(self.inactive_user, 'mock_permission', self.model)
+        self.assertEqual(res, False)
