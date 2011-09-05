@@ -30,7 +30,7 @@ From source
 
 To install django-rulez from source::
 
-	git clone https://github.com/cglass/django-rulez/ django-rulez
+	git clone https://github.com/chrisglass/django-rulez/ django-rulez
 	cd django-rulez
 	python setup.py install
 
