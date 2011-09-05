@@ -73,6 +73,29 @@ The following example should get you started::
             
     registry.register('can_edit', myModel)
 
+Django-rulez requires to declare the rule as a method in the same model. This
+is very simple in case the rule applies to a model in our own application, but
+in some cases, we might need to set object permisions to models from 3rd-party
+applications (e.g. to the User model). Let's see an example for this case::
+
+    # models.py
+    from django.contrib.auth.models import User
+    from rulez import registry
+    
+    def user_can_edit(self, user_obj):
+        '''
+        This function will be hooked up to the User model as a method.
+        The rule says that a user can only be modified by the same user
+        '''
+        if self == user_obj:
+            return True
+        return False
+    
+    # 'add_to_class is a standard Django method
+    User.add_to_class('can_edit', user_can_edit)
+            
+    registry.register('can_edit', User)
+
 Another example: using roles
 =============================
 
