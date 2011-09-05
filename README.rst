@@ -91,7 +91,7 @@ applications (e.g. to the User model). Let's see an example for this case::
             return True
         return False
     
-    # 'add_to_class is a standard Django method
+    # 'add_to_class' is a standard Django method
     User.add_to_class('can_edit', user_can_edit)
             
     registry.register('can_edit', User)
