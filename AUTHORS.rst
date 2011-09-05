@@ -3,6 +3,7 @@ Authors
 
 * Christopher Glass
 * Stefan Foulis
+* Juande Carrion
 
 Previous authors
 =================
