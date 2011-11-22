@@ -48,10 +48,10 @@ Configuration
 * Add `rulez` to the list of `INSTALLED_APPS` in your `settings.py`
 * Add the django-rulez authorization backend to the list of `AUTHENTICATION_BACKENDS` in `settings.py`::
 
-	AUTHENTICATION_BACKENDS = {
+	AUTHENTICATION_BACKENDS = [
 	    'django.contrib.auth.backends.ModelBackend', # Django's default auth backend
 	    'rulez.backends.ObjectPermissionBackend',
-	}
+	]
 
 Example
 =========
