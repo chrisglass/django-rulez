@@ -1,3 +1,15 @@
+Version 2.5
+===========
+
+* Django 1.4 compatibility fixes.
+* New templatetag alows permission at user level.
+* Various bugfixes.
+
+Version 2.4
+===========
+
+* Various bugfixes
+
 Version 2.3
 ===========
 
