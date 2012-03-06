@@ -87,8 +87,8 @@ class TemplatetagTestCase(TestCase):
         self.assertEqual(rendered, "no he can't")
 
     def test_invalid_user(self):
-        self.assertRaisesRegexp(TemplateSyntaxError,
-            "Caught AttributeError while rendering: 'NoneType' object has no attribute 'has_perm'",
+        self.assertRaisesRegexp((TemplateSyntaxError, AttributeError),
+            "'NoneType' object has no attribute 'has_perm'",
             self.render_template,
             "{% load rulez_perms %}{% rulez_perms mock_positive_permission object as can %}", {
                 "object": MockModel(), "user": None
