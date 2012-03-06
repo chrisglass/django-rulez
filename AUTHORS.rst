@@ -4,6 +4,7 @@ Authors
 * Christopher Glass
 * Stefan Foulis
 * Juande Carrion
+* Filip Wasilewski
 
 Previous authors
 =================
