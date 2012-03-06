@@ -145,3 +145,7 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    "rulez.backends.ObjectPermissionBackend",
+]
