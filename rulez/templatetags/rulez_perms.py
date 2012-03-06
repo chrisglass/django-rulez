@@ -1,5 +1,4 @@
 from django import template
-from django.contrib.auth.models import AnonymousUser
 
 register = template.Library()
 
@@ -12,8 +11,6 @@ class RulezPermsNode(template.Node):
     def render(self, context):
         user_obj = template.resolve_variable('user', context)
         obj = template.resolve_variable(self.objname, context)
-        if not user_obj.is_authenticated():
-            user_obj = AnonymousUser()
         context[self.varname] = user_obj.has_perm(self.codename, obj)
         return ''
 
