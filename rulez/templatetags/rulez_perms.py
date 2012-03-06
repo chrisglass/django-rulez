@@ -47,6 +47,6 @@ def rulez_perms(parser, token):
     if bits[3] != 'as':
         raise template.TemplateSyntaxError(
             "third argument to tag must be 'as'")
-    return RulezPermsNode(bits[1], bits[2], bits[3])
+    return RulezPermsNode(bits[1], bits[2], bits[4])
 
 rulez_perms = register.tag(rulez_perms)
