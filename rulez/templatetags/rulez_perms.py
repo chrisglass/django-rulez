@@ -1,5 +1,4 @@
 from django import template
-from django.contrib.auth.models import AnonymousUser
 
 register = template.Library()
 
@@ -12,8 +11,6 @@ class RulezPermsNode(template.Node):
     def render(self, context):
         user_obj = template.resolve_variable('user', context)
         obj = template.resolve_variable(self.objname, context)
-        if not user_obj.is_authenticated:
-            user_obj = AnonymousUser()
         context[self.varname] = user_obj.has_perm(self.codename, obj)
         return ''
 
@@ -47,6 +44,6 @@ def rulez_perms(parser, token):
     if bits[3] != 'as':
         raise template.TemplateSyntaxError(
             "third argument to tag must be 'as'")
-    return RulezPermsNode(bits[1], bits[2], bits[3])
+    return RulezPermsNode(bits[1], bits[2], bits[4])
 
 rulez_perms = register.tag(rulez_perms)
