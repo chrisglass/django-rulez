@@ -27,3 +27,27 @@ class rules(object):
 
         # Pass it along
         return cls
+
+
+class rule(object):
+    """On a decorated function; registers permission with the passed class.
+    """
+
+    def __init__(self, codename, model):
+        # Codename of the permission function
+        self.codename = codename
+
+        # Model to register this rule with
+        self.model = model
+
+    def __call__(self, func):
+        from . import registry
+
+        # Add function to the model
+        self.model.add_to_class(self.codename, func)
+
+        # Register the function
+        registry.register(self.codename, self.model)
+
+        # Pass it along
+        return func
