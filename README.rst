@@ -103,6 +103,7 @@ A little more code is needed to use roles, but it's still pretty concise::
 
     # models.py
     from rulez.rolez.base import AbstractRole
+    from rulez.roles.models import ModelRoleMixin
     from rulez import registry
 
     class Editor(AbstractRole):
@@ -122,4 +123,32 @@ A little more code is needed to use roles, but it's still pretty concise::
             '''
             return self.has_role(user_obj, Editor):
 
+        roles = [Editor, ]
+
     registry.register('can_edit', myModel)
+
+Using your rules
+=================
+
+Once you have created a rule or role, you can utilize them directly on 
+an instance of your model:::
+
+    model_instance = MyModel.objects.get(pk=1)
+    user_chris = User.objects.get(username='chris')
+
+    model_instance.can_edit(user_chris)
+
+Or, with the help of django-rulez's authentication backend, on a user 
+object:::
+
+    user_chris.has_perm('can_edit', model_instance)
+
+In addition, the following templatetag usage is supported:::
+
+   {% load rulez_perms %}
+   {% rulez_perms can_edit model_instance as VARNAME %}
+   {% if VARNAME %}
+   You have permissions
+   {% else %}
+   Sorry, you don't have permission
+   {% endif %}
