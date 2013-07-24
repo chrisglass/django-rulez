@@ -13,13 +13,26 @@ Django-rulez also implements a role concept, allowing for very readable and
 maintainable code.
 
 django-rulez was forked from django-rules, since some of the goals django-rules
-set themselves didn't match our current project goals.You can refer to their 
+set themselves didn't match our current project goals. You can refer to their 
 github project page for more information about this other cool project: 
 https://github.com/maraujop/django-rules
 Kudos for the good work guys!
 
 Generally, it is also an instance-level authorization backend, that stores the 
 rules themselves as methods on models.
+
+Status
+======
+
+Since many people asked - this project is still active and used in production
+systems, but its current goals have been reached and not much further
+development happens.
+
+Pull requests or discussion is very welcome, especially if you have an
+interesting use-case we haven't thought of :)
+
+Our test coverage is close to 100%, and we would like to keep it this way, so
+please make sure you test before you push.
 
 Installation
 =============
