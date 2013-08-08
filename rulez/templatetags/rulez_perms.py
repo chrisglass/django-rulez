@@ -35,7 +35,7 @@ def rulez_perms(parser, token):
     '''
     try:
         bits = token.split_contents()
-    except ValueError:
+    except ValueError: #pragma: nocover
         raise template.TemplateSyntaxError(
             'tag requires exactly three arguments')
     if len(bits) != 5:

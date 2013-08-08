@@ -96,6 +96,20 @@ class RolesCacheHelperTestCase(TestCase):
         res = model.has_role(user, Tester)
         self.assertEqual(res, True)
 
+    def test_has_role_caches_on_instance(self):
+        model = TestModel()
+        user = MockUser()
+        setattr(user, 'member', True)
+        self.assertFalse(hasattr(model, "_rolez"))
+        res = model.has_role(user, Tester)
+        self.assertEqual(res, True)
+        self.assertTrue(hasattr(model, "_rolez"))
+        self.assertEqual(1, len(model._rolez))
+        res = model.has_role(user, Tester)
+        self.assertEqual(res, True)
+        self.assertTrue(hasattr(model, "_rolez"))
+        self.assertEqual(1, len(model._rolez))
+
     def test_doesnt_have_role_works(self):
         model = TestModel()
         user = MockUser()
