@@ -27,12 +27,12 @@ def counter_key(obj):
         pk = obj.pk
     obj_type = str(obj.__class__.__name__).lower()
     return "%s-%s" % (obj_type, pk)
-    
+
 def increment_counter(obj):
     """
     Invalidate the cache for the passed object.
     """
-    if obj: # If the object is None, do nothing (it's pointless)
+    if obj is not None: # If the object is None, do nothing (it's pointless)
         cache.set(counter_key(obj), int(time.time()), 1*HOUR)
 
 def get_counter(obj):
@@ -53,7 +53,7 @@ def roles_key(user, obj):
     obj_counter = get_counter(obj)
     user_id = get_user_pk(user)
     user_counter = get_counter(user)
-    return "%s-%s-%s-%s-%s" % (user_id, user_counter, obj_type, obj_id, 
+    return "%s-%s-%s-%s-%s" % (user_id, user_counter, obj_type, obj_id,
                                obj_counter)
 
 def get_user_pk(user):
@@ -68,7 +68,7 @@ def get_user_pk(user):
 
 def get_roles(user, obj):
     """
-    Get a list of roles assigned to a user for a specific instance from the 
+    Get a list of roles assigned to a user for a specific instance from the
     cache, or builds such a list if it is not found.
     """
     # get roles for the user, if present:
@@ -81,7 +81,7 @@ def get_roles(user, obj):
         user_roles = []
         if not hasattr(obj, 'relevant_roles'):
             raise RulesException('Cannot build roles cache for %s instance. Did you forget to define a "relevant_roles()" method on %s?' % (obj.__class__, obj.__class__))
-        
+
         relevant = obj.relevant_roles()
         for role in relevant:
             if role.is_member(user, obj):

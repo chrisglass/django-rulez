@@ -2,11 +2,13 @@
 from django.test.testcases import TestCase
 from rulez import registry
 from rulez.backends import ObjectPermissionBackend
-from rulez.exceptions import NonexistentFieldName
+from rulez.exceptions import NonexistentFieldName, NotBooleanPermission
 from rulez.registry import Rule
+
 
 class MockModel():
     pk = 999
+    not_callable = 'whatever'
 
     def __init__(self):
         self.attr_permission = True
@@ -14,10 +16,14 @@ class MockModel():
 
     def mock_permission(self, user):
         return True
-    
+
     def mock_simple_permission(self):
         # just a callable, no "user" parameter
         return True
+
+    def mock_non_boolean_permission(self, user):
+        return "Whatever"
+
 
 class MockUser():
     def __init__(self, is_active=True):
@@ -25,6 +31,7 @@ class MockUser():
         self.is_active = is_active
     def is_anonymous(self):
         return False
+
 
 class BackendTestCase(TestCase):
 
@@ -39,7 +46,7 @@ class BackendTestCase(TestCase):
         back = ObjectPermissionBackend()
         res = back.has_perm(self.user, 'mock_permission', self.model)
         self.assertEqual(res, True)
-    
+
     def test_rules_returns_False_for_None_obj(self):
         self.create_fixtures()
         registry.register('mock_permission', MockModel)
@@ -53,33 +60,51 @@ class BackendTestCase(TestCase):
         back = ObjectPermissionBackend()
         res = back.has_perm(self.user, 'whatever_permission', self.model)
         self.assertEqual(res, False)
-    
+
     def test_user_is_tested_for_simple_rule(self):
         self.create_fixtures()
         registry.register('mock_simple_permission', MockModel)
         back = ObjectPermissionBackend()
         res = back.has_perm(self.user, 'mock_simple_permission', self.model)
         self.assertEqual(res, True)
-        
+
     def test_user_is_tested_for_simple_rule_by_field_name(self):
         self.create_fixtures()
-        registry.register('mock_permission', MockModel, field_name='mock_simple_permission')
+        registry.register(
+            'mock_permission', MockModel, field_name='mock_simple_permission')
         back = ObjectPermissionBackend()
         res = back.has_perm(self.user, 'mock_permission', self.model)
         self.assertEqual(res, True)
-        
+
     def test_non_existant_filenames_are_caught(self):
         self.create_fixtures()
         codename = 'mock_permission'
         rule = Rule(codename, MockModel, field_name='I_do_not_exist')
         registry.registry[MockModel].update({codename : rule})
         back = ObjectPermissionBackend()
-        
-        self.assertRaises(NonexistentFieldName, back.has_perm, self.user, 'mock_permission', self.model)
-        
+        self.assertRaises(
+            NonexistentFieldName, back.has_perm, self.user, 'mock_permission',
+            self.model)
+
     def test_inactive_user_can_never_have_any_permissions(self):
         self.create_fixtures()
         registry.register('mock_permission', MockModel)
         back = ObjectPermissionBackend()
         res = back.has_perm(self.inactive_user, 'mock_permission', self.model)
         self.assertEqual(res, False)
+
+    def test_non_boolean_permissions_raises(self):
+        self.create_fixtures()
+        registry.register('mock_non_boolean_permission', MockModel)
+        back = ObjectPermissionBackend()
+        self.assertRaises(
+            NotBooleanPermission, back.has_perm, self.user,
+            'mock_non_boolean_permission', self.model)
+
+    def test_non_callable_permission_raises(self):
+        self.create_fixtures()
+        registry.register('not_callable', MockModel)
+        back = ObjectPermissionBackend()
+        self.assertRaises(
+            NotBooleanPermission, back.has_perm, self.user,
+            'not_callable', self.model)
