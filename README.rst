@@ -24,6 +24,11 @@ rules themselves as methods on models.
 Status
 ======
 
+.. |travisci| image:: https://api.travis-ci.org/chrisglass/django-rulez.png
+.. _travisci https://travis-ci.org/chrisglass/django-rulez
+
+|travisci|
+
 Since many people asked - this project is still active and used in production
 systems, but its current goals have been reached and not much further
 development happens.
