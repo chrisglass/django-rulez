@@ -36,7 +36,7 @@ development happens.
 Pull requests or discussion is very welcome, especially if you have an
 interesting use-case we haven't thought of :)
 
-Our test coverage is close to 100%, and we would like to keep it this way, so
+Our test coverage is 100%, and we would like to keep it this way, so
 please make sure you test before you push.
 
 Installation
