@@ -37,12 +37,16 @@ class ObjectPermissionBackend(object):
         try:
             bound_field = getattr(obj, rule.field_name)
         except AttributeError:
-            raise NonexistentFieldName("Field_name %s from rule %s does not longer exist in model %s. \
-                                        The rule is obsolete!", (rule.field_name, rule.codename, rule.model))
+            raise NonexistentFieldName(
+                "Field_name %s from rule %s does not longer exist in model %s. \
+                The rule is obsolete!", (rule.field_name,
+                                         rule.codename,
+                                         rule.model))
 
         if not callable(bound_field):
-            raise NotBooleanPermission("Attribute %s from model %s on rule %s is not callable",
-                                        (rule.field_name, rule.model, rule.codename))
+            raise NotBooleanPermission(
+                "Attribute %s from model %s on rule %s is not callable",
+                (rule.field_name, rule.model, rule.codename))
 
         # Otherwise it is a callabe bound_field
         # Let's see if we pass or not user_obj as a parameter
@@ -52,7 +56,8 @@ class ObjectPermissionBackend(object):
             is_authorized = bound_field()
 
         if not isinstance(is_authorized, bool):
-            raise NotBooleanPermission("Callable %s from model %s on rule %s does not return a boolean value",
-                                        (rule.field_name, rule.model, rule.codename))
+            raise NotBooleanPermission(
+                "Callable %s from model %s on rule %s does not return a \
+                boolean value", (rule.field_name, rule.model, rule.codename))
 
         return is_authorized

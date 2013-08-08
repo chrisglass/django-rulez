@@ -17,6 +17,7 @@ For the counter , per instance:
 """
 
 HOUR = 60*60
+
 #===============================================================================
 # Counter handling
 #===============================================================================
@@ -28,12 +29,14 @@ def counter_key(obj):
     obj_type = str(obj.__class__.__name__).lower()
     return "%s-%s" % (obj_type, pk)
 
+
 def increment_counter(obj):
     """
     Invalidate the cache for the passed object.
     """
     if obj is not None: # If the object is None, do nothing (it's pointless)
         cache.set(counter_key(obj), int(time.time()), 1*HOUR)
+
 
 def get_counter(obj):
     """
@@ -43,6 +46,7 @@ def get_counter(obj):
     if not counter:
         counter = 0
     return counter
+
 
 def roles_key(user, obj):
     if obj.__class__ in (User, AnonymousUser,):
@@ -55,6 +59,7 @@ def roles_key(user, obj):
     user_counter = get_counter(user)
     return "%s-%s-%s-%s-%s" % (user_id, user_counter, obj_type, obj_id,
                                obj_counter)
+
 
 def get_user_pk(user):
     if not user or (user and user.is_anonymous()):
@@ -80,7 +85,10 @@ def get_roles(user, obj):
         # we need to recompute roles for this model
         user_roles = []
         if not hasattr(obj, 'relevant_roles'):
-            raise RulesException('Cannot build roles cache for %s instance. Did you forget to define a "relevant_roles()" method on %s?' % (obj.__class__, obj.__class__))
+            raise RulesException(
+                'Cannot build roles cache for %s instance. Did you forget to \
+                define a "relevant_roles()" method on %s?' % (obj.__class__,
+                                                              obj.__class__))
 
         relevant = obj.relevant_roles()
         for role in relevant:
