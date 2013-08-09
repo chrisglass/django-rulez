@@ -78,8 +78,8 @@ def get_roles(user, obj):
     """
     # get roles for the user, if present:
     roles = cache.get(roles_key(user, obj))
-    if roles:
-        # Cache hit
+    if isinstance(roles, list):
+        # Cache hit (a miss returns NoneType rather than an empty list)
         return roles
     else:
         # we need to recompute roles for this model
