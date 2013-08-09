@@ -33,11 +33,7 @@ def rulez_perms(parser, token):
             have permission for {{ VARNAME }}.{{ CODENAME }}!!
         {% endfor %}
     '''
-    try:
-        bits = token.split_contents()
-    except ValueError: #pragma: nocover
-        raise template.TemplateSyntaxError(
-            'tag requires exactly three arguments')
+    bits = token.split_contents()
     if len(bits) != 5:
         raise template.TemplateSyntaxError(
             'tag requires exactly three arguments')
