@@ -25,7 +25,7 @@ setup(
     keywords=['authorization', 'backends', 'django', 'rules', 'permissions', 'rulez'],
     author='Christopher Glass',
     author_email='tribaal@gmail.com',
-    url='http://github.com/cglass/django-rulez',
+    url='http://github.com/chrisglass/django-rulez',
     license='BSD',
     packages=find_packages(),
     zip_safe=False,
