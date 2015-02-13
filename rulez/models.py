@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import rolez.signals
+import rulez.rolez.signals

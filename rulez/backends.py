@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import inspect
 
-from exceptions import NotBooleanPermission
-from exceptions import NonexistentFieldName
+from rulez.exceptions import NotBooleanPermission
+from rulez.exceptions import NonexistentFieldName
 
 from rulez import registry
 
