@@ -46,7 +46,9 @@ Installation
 From source
 ------------
 
-To install django-rulez from source::
+To install django-rulez from source:
+
+.. code-block:: shell
 
 	git clone https://github.com/chrisglass/django-rulez/ django-rulez
 	cd django-rulez
@@ -55,7 +57,9 @@ To install django-rulez from source::
 From Pypi
 ----------
 
-Simply install django-rulez like you would install any other pypi package::
+Simply install django-rulez like you would install any other pypi package:
+
+.. code-block:: shell
 
     pip install django-rulez
 
@@ -64,7 +68,9 @@ Configuration
 ==============
 
 * Add `rulez` to the list of `INSTALLED_APPS` in your `settings.py`
-* Add the django-rulez authorization backend to the list of `AUTHENTICATION_BACKENDS` in `settings.py`::
+* Add the django-rulez authorization backend to the list of `AUTHENTICATION_BACKENDS` in `settings.py`:
+
+  .. code-block:: python
 
 	AUTHENTICATION_BACKENDS = [
 	    'django.contrib.auth.backends.ModelBackend', # Django's default auth backend
@@ -74,7 +80,9 @@ Configuration
 Example
 =========
 
-The following example should get you started::
+The following example should get you started:
+
+.. code-block:: python
 
     # models.py
     from rulez import registry
@@ -94,7 +102,9 @@ The following example should get you started::
 Django-rulez requires to declare the rule as a method in the same model. This
 is very simple in case the rule applies to a model in our own application, but
 in some cases, we might need to set object permisions to models from 3rd-party
-applications (e.g. to the User model). Let's see an example for this case::
+applications (e.g. to the User model). Let's see an example for this case:
+
+.. code-block:: python
 
     # models.py
     from django.contrib.auth.models import User
@@ -117,7 +127,9 @@ applications (e.g. to the User model). Let's see an example for this case::
 Another example: using roles
 =============================
 
-A little more code is needed to use roles, but it's still pretty concise::
+A little more code is needed to use roles, but it's still pretty concise:
+
+.. code-block:: python
 
     # models.py
     from rulez.rolez.base import AbstractRole
@@ -149,7 +161,9 @@ Using your rules
 =================
 
 Once you have created a rule or role, you can utilize them directly on 
-an instance of your model:::
+an instance of your model:
+
+.. code-block:: python
 
     model_instance = MyModel.objects.get(pk=1)
     user_chris = User.objects.get(username='chris')
@@ -157,11 +171,15 @@ an instance of your model:::
     model_instance.can_edit(user_chris)
 
 Or, with the help of django-rulez's authentication backend, on a user 
-object:::
+object:
+
+.. code-block:: python
 
     user_chris.has_perm('can_edit', model_instance)
 
-In addition, the following templatetag usage is supported:::
+In addition, the following templatetag usage is supported:
+
+.. code-block:: html+django
 
    {% load rulez_perms %}
    {% rulez_perms can_edit model_instance as VARNAME %}
