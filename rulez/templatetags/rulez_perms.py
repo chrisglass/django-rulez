@@ -9,8 +9,15 @@ class RulezPermsNode(template.Node):
         self.varname = varname
 
     def render(self, context):
-        user_obj = template.resolve_variable('user', context)
-        obj = template.resolve_variable(self.objname, context)
+        try:
+            user_obj = template.resolve_variable('user', context)
+        except:
+            user_obj = template.Variable('user').resolve(context)
+        try:
+            obj = template.resolve_variable(self.objname, context)
+        except:
+            obj = template.Variable(self.objname).resolve(context)
+            
         context[self.varname] = user_obj.has_perm(self.codename, obj)
         return ''
 
