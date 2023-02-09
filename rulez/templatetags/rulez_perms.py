@@ -10,11 +10,11 @@ class RulezPermsNode(template.Node):
 
     def render(self, context):
         try:
-            user_obj = template.resolve_variable('user', context)
+            user_obj = template.Variable('user').resolve(context)
         except:
             user_obj = template.Variable('user').resolve(context)
         try:
-            obj = template.resolve_variable(self.objname, context)
+            obj = template.Variable(self.objname).resolve(context)
         except:
             obj = template.Variable(self.objname).resolve(context)
             
